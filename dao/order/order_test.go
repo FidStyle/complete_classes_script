@@ -162,3 +162,42 @@ func TestUpdateOrderSpecifyPublicByID(t *testing.T) {
 		t.Errorf("order2.SpecifyPublic: %v:%v", fmt.Sprintln("日语初级 武经七书"), order2.SpecifyPublic)
 	}
 }
+
+func TestGetOrderByCreater(t *testing.T) {
+	tx := testarg.Tx()
+
+	orders := []Order{
+		{Condition: ConditionScheduling}, {Condition: ConditionError}, {Condition: ConditionSuccess}, {Condition: ConditionScheduling},
+		{Condition: ConditionWait}, {Condition: ConditionSlow}, {Condition: ConditionWait, SuccessAt: time.Now()},
+	}
+
+	for i := 0; i < len(orders); i++ {
+		createOrder := orders[i]
+		createOrder.Creater = "test"
+		order, err := CreateOrder(tx, &createOrder)
+		if err != nil {
+			t.Error(err)
+		}
+		if _, err := UpdateOrderConditionByID(tx, order.ID, orders[i].Condition); err != nil {
+			t.Error(err)
+		}
+	}
+
+	res, err := GetOrderByCreater(tx, 3, 1, "test", false)
+	if err != nil {
+		t.Error(err)
+	}
+	if len(res) != 3 {
+		t.Errorf("len(res): %v:%v", 3, len(res))
+	}
+
+	if res[0].Condition != ConditionScheduling {
+		t.Errorf("res[0].Condition: %v:%v", ConditionScheduling, res[0].Condition)
+	}
+	if res[1].Condition != ConditionScheduling {
+		t.Errorf("res[1].Condition: %v:%v", ConditionScheduling, res[1].Condition)
+	}
+	if res[2].Condition != ConditionSlow {
+		t.Errorf("res[2].Condition: %v:%v", ConditionSlow, res[2].Condition)
+	}
+}

@@ -1,1 +1,4 @@
-[Error] 2024/01/06 07:06:47 user does not exist
+[Error] 2024/01/06 08:38:34 read tcp 192.168.246.132:47618->121.40.241.115:5432: read: connection reset by peer
+[Error] 2024/01/06 08:38:34 read tcp 192.168.246.132:47618->121.40.241.115:5432: read: connection reset by peer
+[Error] 2024/01/06 09:03:30 read tcp 192.168.246.132:38108->121.40.241.115:5432: read: connection reset by peer
+[Error] 2024/01/06 09:03:30 read tcp 192.168.246.132:38108->121.40.241.115:5432: read: connection reset by peer

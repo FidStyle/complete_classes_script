@@ -14,6 +14,7 @@ const (
 	ConditionScheduling = "scheduling"
 	ConditionError      = "error"
 	ConditionSlow       = "slow"
+	ConditionSuccess    = "success"
 )
 
 func CreateOrder(tx *gorm.DB, model *Order) (*Order, error) {
@@ -50,6 +51,34 @@ func GetTheOldestOrder(tx *gorm.DB, limit int) ([]*Order, error) {
 		return nil, err
 	}
 
+	return res, nil
+}
+
+func GetOrderByCreater(tx *gorm.DB, limit, offset int, creater string, finish bool) ([]*Order, error) {
+	if finish {
+		return getOrderByCreaterFinish(tx, limit, offset, creater)
+	} else {
+		return getOrderByCreaterUnfinish(tx, limit, offset, creater)
+	}
+}
+
+func getOrderByCreaterUnfinish(tx *gorm.DB, limit int, offset int, creater string) ([]*Order, error) {
+	res := []*Order{}
+	sql := "select * from orders where creater = ? and success_at is null order by case when condition = 'error' then 1 when condition = 'scheduling' then 2 when condition = 'slow' then 3 else 4 end, created_at DESC limit ? offset ?"
+
+	if err := tx.Raw(sql, creater, limit, offset).Find(&res).Error; err != nil {
+		return nil, err
+	}
+	return res, nil
+}
+
+func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string) ([]*Order, error) {
+	res := []*Order{}
+	sql := "select * from orders where creater = ? and success_at it not null order by success_at DESC limit ? offset ?"
+
+	if err := tx.Raw(sql, creater, limit, offset).Find(&res).Error; err != nil {
+		return nil, err
+	}
 	return res, nil
 }
 
