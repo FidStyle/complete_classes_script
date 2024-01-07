@@ -54,9 +54,9 @@ func GetTheOldestOrder(tx *gorm.DB, limit int) ([]*Order, error) {
 	return res, nil
 }
 
-func GetOrderByCreater(tx *gorm.DB, limit, offset int, creater string, finish bool) ([]*Order, error) {
+func GetOrderByCreater(tx *gorm.DB, limit, offset int, creater string, finish bool, info bool) ([]*Order, error) {
 	if finish {
-		return getOrderByCreaterFinish(tx, limit, offset, creater)
+		return getOrderByCreaterFinish(tx, limit, offset, creater, info)
 	} else {
 		return getOrderByCreaterUnfinish(tx, limit, offset, creater)
 	}
@@ -72,11 +72,11 @@ func getOrderByCreaterUnfinish(tx *gorm.DB, limit int, offset int, creater strin
 	return res, nil
 }
 
-func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string) ([]*Order, error) {
+func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string, info bool) ([]*Order, error) {
 	res := []*Order{}
-	sql := "select * from orders where creater = ? and success_at is not null order by success_at DESC limit ? offset ?"
+	sql := "select * from orders where creater = ? and success_at is not null and info = ? order by success_at DESC limit ? offset ?"
 
-	if err := tx.Raw(sql, creater, limit, offset).Find(&res).Error; err != nil {
+	if err := tx.Raw(sql, creater, info, limit, offset).Find(&res).Error; err != nil {
 		return nil, err
 	}
 	return res, nil

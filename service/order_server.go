@@ -49,7 +49,7 @@ func (s *OrderServer) GetOrderByCreater(any *types.GetOrderByCreaterReq) *types.
 			BaseResp: *baseresp.ErrorResp(err),
 		}
 	}
-	res, err := order.GetOrderByCreater(s.tx, any.Limit, any.Offset, account, any.Finish)
+	res, err := order.GetOrderByCreater(s.tx, any.Limit, any.Offset, account, any.Finish, any.Info)
 	if err != nil {
 		return &types.GetOrderByCreaterResp{
 			BaseResp: *baseresp.ErrorResp(err),

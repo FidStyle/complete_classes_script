@@ -29,6 +29,7 @@ type Order struct {
 	SuccessAt           time.Time `gorm:"column:success_at"`
 	Condition           string    `gorm:"column:condition"`
 	Creater             string    `gorm:"column:creater"`
+	Info                bool      `gorm:"column:info"`
 }
 
 func (obj *Order) GetScoreByKind(kind string) float64 {
