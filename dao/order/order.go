@@ -74,7 +74,7 @@ func getOrderByCreaterUnfinish(tx *gorm.DB, limit int, offset int, creater strin
 
 func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string) ([]*Order, error) {
 	res := []*Order{}
-	sql := "select * from orders where creater = ? and success_at it not null order by success_at DESC limit ? offset ?"
+	sql := "select * from orders where creater = ? and success_at is not null order by success_at DESC limit ? offset ?"
 
 	if err := tx.Raw(sql, creater, limit, offset).Find(&res).Error; err != nil {
 		return nil, err

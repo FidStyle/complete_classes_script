@@ -3,6 +3,7 @@ package service
 import (
 	"compete_classes_script/dao/order"
 	"compete_classes_script/dao/user"
+	baseresp "compete_classes_script/pkg/base_resp"
 	castsd "compete_classes_script/pkg/utils/cast/cast_sd"
 	"compete_classes_script/service/types"
 	"context"
@@ -38,4 +39,18 @@ func (s *OrderServer) CreateOrder(any *types.CreateOrderReq) error {
 	}
 
 	return nil
+}
+
+func (s *OrderServer) GetOrderByCreater(any *types.GetOrderByCreaterReq) *types.GetOrderByCreaterResp {
+	res, err := order.GetOrderByCreater(s.tx, any.Limit, any.Offset, any.Creater, any.Finish)
+	if err != nil {
+		return &types.GetOrderByCreaterResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+
+	return &types.GetOrderByCreaterResp{
+		BaseResp: *baseresp.SuccessResp(),
+		Orders:   res,
+	}
 }

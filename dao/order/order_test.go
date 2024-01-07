@@ -200,4 +200,14 @@ func TestGetOrderByCreater(t *testing.T) {
 	if res[2].Condition != ConditionSlow {
 		t.Errorf("res[2].Condition: %v:%v", ConditionSlow, res[2].Condition)
 	}
+
+	// res, err = GetOrderByCreater(tx, 10, 0, "test", true)
+	// if err != nil {
+	// 	t.Error(err)
+	// }
+	// if len(res) != 1 {
+	// 	t.Errorf("len(res): %v:%v", 1, len(res))
+	// }
+
+	// fmt.Println(res[0].CreatedAt)
 }

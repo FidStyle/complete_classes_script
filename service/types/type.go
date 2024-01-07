@@ -1,6 +1,9 @@
 package types
 
-import baseresp "compete_classes_script/pkg/base_resp"
+import (
+	"compete_classes_script/dao/order"
+	baseresp "compete_classes_script/pkg/base_resp"
+)
 
 type CreateOrderReq struct {
 	// unencrypted password
@@ -21,6 +24,18 @@ type CreateOrderReq struct {
 	F_n                 float64  `json:"F_n"`
 	A0_n                float64  `json:"A0_n"`
 	Token               string   `json:"token"`
+}
+
+type GetOrderByCreaterReq struct {
+	Creater string
+	Finish  bool
+	Limit   int
+	Offset  int
+}
+
+type GetOrderByCreaterResp struct {
+	baseresp.BaseResp
+	Orders []*order.Order `json:"orders"`
 }
 
 type LoginReq struct {
