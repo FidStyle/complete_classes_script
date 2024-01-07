@@ -21,6 +21,13 @@ type CreateOrderReq struct {
 	Token               string   `json:"token"`
 }
 
+type GetOrderByCreaterReq struct {
+	Token  string `json:"token"`
+	Finish bool
+	Limit  int
+	Offset int
+}
+
 type LoginReq struct {
 	Account string `json:"account"`
 	Pw      string `json:"pw"`

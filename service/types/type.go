@@ -27,10 +27,10 @@ type CreateOrderReq struct {
 }
 
 type GetOrderByCreaterReq struct {
-	Creater string
-	Finish  bool
-	Limit   int
-	Offset  int
+	Token  string
+	Finish bool
+	Limit  int
+	Offset int
 }
 
 type GetOrderByCreaterResp struct {

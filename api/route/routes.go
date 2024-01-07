@@ -20,4 +20,5 @@ func RegisterRoutes(r *gin.Engine, svctx *svc.ServiceContext) {
 	})
 	r.POST("/api/order", middleware.TokenVerify(svctx.Rtx), CreateOrder(svctx))
 	r.POST("/api/login", Login(svctx))
+	r.GET("/api/order", middleware.TokenVerify(svctx.Rtx), GetOrderByCreater(svctx))
 }

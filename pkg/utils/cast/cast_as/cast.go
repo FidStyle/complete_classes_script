@@ -13,6 +13,20 @@ func CastCreateOrderReq(any *types.CreateOrderReq) *svc.CreateOrderReq {
 	return res
 }
 
+func CastGetOrderByCreaterReq(any *types.GetOrderByCreaterReq) *svc.GetOrderByCreaterReq {
+	res := &svc.GetOrderByCreaterReq{}
+
+	utils.FillSameField(any, res)
+	return res
+}
+
+func CastGetOrderByCreaterResp(any *svc.GetOrderByCreaterResp) *types.GetOrderByCreaterResp {
+	res := &types.GetOrderByCreaterResp{}
+
+	utils.FillSameField(any, res)
+	return res
+}
+
 func CastLoginReq(any *types.LoginReq) *svc.LoginReq {
 	res := &svc.LoginReq{}
 
