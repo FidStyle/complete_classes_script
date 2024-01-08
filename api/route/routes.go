@@ -23,4 +23,6 @@ func RegisterRoutes(r *gin.Engine, svctx *svc.ServiceContext) {
 	r.POST("/api/get/order", middleware.TokenVerify(svctx.Rtx), GetOrderByCreater(svctx))
 	r.PUT("/api/info", middleware.TokenVerify(svctx.Rtx), UpdateOrderInfoByID(svctx))
 	r.DELETE("/api/order", middleware.TokenVerify(svctx.Rtx), DeleteOrderByID(svctx))
+
+	r.Static("/", "../../dist")
 }
