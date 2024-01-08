@@ -39,6 +39,15 @@ type GetOrderByCreaterResp struct {
 	Orders []*order.Order `json:"orders"`
 }
 
+type UpdateOrderInfoByIDReq struct {
+	ID   int
+	Info bool
+}
+
+type UpdateOrderInfoByIDResp struct {
+	baseresp.BaseResp
+}
+
 type LoginReq struct {
 	Account string
 	Pw      string

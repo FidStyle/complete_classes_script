@@ -70,3 +70,15 @@ func (s *OrderServer) GetOrderByCreater(any *types.GetOrderByCreaterReq) *types.
 		Orders:   res,
 	}
 }
+
+func (s *OrderServer) UpdateOrderInfoByID(any *types.UpdateOrderInfoByIDReq) *types.UpdateOrderInfoByIDResp {
+	if _, err := order.UpdateOrderInfoByID(s.tx, any.ID, any.Info); err != nil {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+
+	return &types.UpdateOrderInfoByIDResp{
+		BaseResp: *baseresp.SuccessResp(),
+	}
+}
