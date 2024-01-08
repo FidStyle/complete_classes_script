@@ -40,8 +40,9 @@ type GetOrderByCreaterResp struct {
 }
 
 type UpdateOrderInfoByIDReq struct {
-	ID   int
-	Info bool
+	ID    int
+	Info  bool
+	Token string
 }
 
 type UpdateOrderInfoByIDResp struct {

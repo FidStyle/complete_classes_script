@@ -72,6 +72,37 @@ func (s *OrderServer) GetOrderByCreater(any *types.GetOrderByCreaterReq) *types.
 }
 
 func (s *OrderServer) UpdateOrderInfoByID(any *types.UpdateOrderInfoByIDReq) *types.UpdateOrderInfoByIDResp {
+	account, err := user.GetAccountByToken(s.rtx, any.Token)
+	if err != nil {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+
+	orders, err := order.GetOrderByID(s.tx, any.ID)
+	if err != nil {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+	if len(orders) == 0 {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(baseresp.ErrOrderIDNotExist),
+		}
+	}
+
+	if orders[0].Creater != account {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(baseresp.ErrAuthInvalid),
+		}
+	}
+
+	if orders[0].SuccessAt.Equal(time.Time{}) {
+		return &types.UpdateOrderInfoByIDResp{
+			BaseResp: *baseresp.ErrorResp(baseresp.ErrInfoUnsuccessOrder),
+		}
+	}
+
 	if _, err := order.UpdateOrderInfoByID(s.tx, any.ID, any.Info); err != nil {
 		return &types.UpdateOrderInfoByIDResp{
 			BaseResp: *baseresp.ErrorResp(err),

@@ -35,6 +35,9 @@ var (
 	ErrMissToken           error = errors.New("token dose not set")
 	ErrExpiredToken        error = errors.New("token expired, please log in again")
 	ErrInvalidArgument     error = errors.New("argument is invalid")
+	ErrOrderIDNotExist     error = errors.New("order id does not exist")
+	ErrInfoUnsuccessOrder  error = errors.New("can not info unsuccess order")
+	ErrAuthInvalid         error = errors.New("invalid auth")
 
 	ErrHeuReLogin            error = errors.New("please log in again")
 	ErrHeuFullClasses        error = errors.New("classes if full")
@@ -50,5 +53,8 @@ var (
 		ErrMissToken:           {1003, ErrMissToken.Error()},
 		ErrExpiredToken:        {1004, ErrExpiredToken.Error()},
 		ErrInvalidArgument:     {1005, ErrInvalidArgument.Error()},
+		ErrOrderIDNotExist:     {1006, ErrOrderIDNotExist.Error()},
+		ErrInfoUnsuccessOrder:  {1007, ErrInfoUnsuccessOrder.Error()},
+		ErrAuthInvalid:         {1008, ErrAuthInvalid.Error()},
 	}
 )
