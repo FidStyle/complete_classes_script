@@ -229,3 +229,11 @@ func UpdateOrderInfoByID(tx *gorm.DB, id int, info bool) (*Order, error) {
 
 	return res, nil
 }
+
+func DeleteOrderByID(tx *gorm.DB, id int) error {
+	if err := tx.Model(&Order{}).Where("id = ?", id).Delete(&Order{}).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

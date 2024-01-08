@@ -230,3 +230,27 @@ func TestUpdateOrderInfoByID(t *testing.T) {
 		t.Errorf("info: %v:%v", false, newOrder.Info)
 	}
 }
+
+func TestDeleteOrderByID(t *testing.T) {
+	tx := testarg.Tx()
+
+	order, err := CreateOrder(tx, &Order{
+		Info: true,
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	if err := DeleteOrderByID(tx, order.ID); err != nil {
+		t.Error(err)
+	}
+
+	res, _ := GetOrderByID(tx, order.ID)
+	// if err != nil {
+	// 	t.Error(err)
+	// }
+
+	if len(res) != 0 {
+		t.Errorf("len(res): %v:%v", 0, len(res))
+	}
+}
