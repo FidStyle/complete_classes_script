@@ -216,3 +216,16 @@ func UpdateOrderSpecifyProfessionalByID(tx *gorm.DB, id int, name string) (*Orde
 
 	return res, nil
 }
+
+func UpdateOrderInfoByID(tx *gorm.DB, id int, info bool) (*Order, error) {
+	if err := tx.Model(&Order{}).Where("id = ?", id).Update("info", info).Error; err != nil {
+		return nil, err
+	}
+
+	res := &Order{}
+	if err := tx.Model(&Order{}).Where("id = ?", id).Find(&res).Error; err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

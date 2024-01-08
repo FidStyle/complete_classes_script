@@ -211,3 +211,22 @@ func TestGetOrderByCreater(t *testing.T) {
 
 	// fmt.Println(res[0].CreatedAt)
 }
+
+func TestUpdateOrderInfoByID(t *testing.T) {
+	tx := testarg.Tx()
+
+	order, err := CreateOrder(tx, &Order{
+		Info: true,
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	newOrder, err := UpdateOrderInfoByID(tx, order.ID, false)
+	if err != nil {
+		t.Error(err)
+	}
+	if newOrder.Info {
+		t.Errorf("info: %v:%v", false, newOrder.Info)
+	}
+}
