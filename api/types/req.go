@@ -35,6 +35,11 @@ type UpdateOrderInfoByIDReq struct {
 	Token string
 }
 
+type DeleteOrderByIDReq struct {
+	ID    int
+	Token string
+}
+
 type LoginReq struct {
 	Account string `json:"account"`
 	Pw      string `json:"pw"`

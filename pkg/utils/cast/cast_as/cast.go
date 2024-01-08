@@ -34,6 +34,13 @@ func CastUpdateOrderInfoByIDReq(any *types.UpdateOrderInfoByIDReq) *svc.UpdateOr
 	return res
 }
 
+func CastDeleteOrderByIDReq(any *types.DeleteOrderByIDReq) *svc.DeleteOrderByIDReq {
+	res := &svc.DeleteOrderByIDReq{}
+
+	utils.FillSameField(any, res)
+	return res
+}
+
 func CastLoginReq(any *types.LoginReq) *svc.LoginReq {
 	res := &svc.LoginReq{}
 
