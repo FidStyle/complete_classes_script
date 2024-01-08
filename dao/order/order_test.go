@@ -183,7 +183,7 @@ func TestGetOrderByCreater(t *testing.T) {
 		}
 	}
 
-	res, err := GetOrderByCreater(tx, 3, 1, "test", false, false)
+	res, err := GetOrderByCreater(tx, 3, 1, "test", false, "false")
 	if err != nil {
 		t.Error(err)
 	}

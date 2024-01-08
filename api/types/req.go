@@ -26,7 +26,7 @@ type GetOrderByCreaterReq struct {
 	Finish bool
 	Limit  int
 	Offset int
-	Info   bool
+	Info   string
 }
 
 type LoginReq struct {

@@ -1,0 +1,4 @@
+[Error] 2024/01/08 01:34:14 unexpected EOF
+[Error] 2024/01/08 02:03:34 unexpected EOF
+[Error] 2024/01/08 02:09:54 ERROR: OFFSET must not be negative (SQLSTATE 2201X)
+[Error] 2024/01/08 02:35:13 unexpected EOF

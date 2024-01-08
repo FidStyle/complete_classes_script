@@ -20,6 +20,7 @@ const (
 func CreateOrder(tx *gorm.DB, model *Order) (*Order, error) {
 	model.CreatedAt = time.Now()
 	model.Condition = ConditionWait
+	model.Info = false
 	if err := tx.Model(&Order{}).Omit("success_at").Create(&model).Error; err != nil {
 		return nil, err
 	}
@@ -54,7 +55,7 @@ func GetTheOldestOrder(tx *gorm.DB, limit int) ([]*Order, error) {
 	return res, nil
 }
 
-func GetOrderByCreater(tx *gorm.DB, limit, offset int, creater string, finish bool, info bool) ([]*Order, error) {
+func GetOrderByCreater(tx *gorm.DB, limit, offset int, creater string, finish bool, info string) ([]*Order, error) {
 	if finish {
 		return getOrderByCreaterFinish(tx, limit, offset, creater, info)
 	} else {
@@ -72,11 +73,22 @@ func getOrderByCreaterUnfinish(tx *gorm.DB, limit int, offset int, creater strin
 	return res, nil
 }
 
-func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string, info bool) ([]*Order, error) {
+func getOrderByCreaterFinish(tx *gorm.DB, limit int, offset int, creater string, info string) ([]*Order, error) {
 	res := []*Order{}
 	sql := "select * from orders where creater = ? and success_at is not null and info = ? order by success_at DESC limit ? offset ?"
+	if info == "ignore" {
+		sql = "select * from orders where creater = ? and success_at is not null order by success_at DESC limit ? offset ?"
+		if err := tx.Raw(sql, creater, limit, offset).Find(&res).Error; err != nil {
+			return nil, err
+		}
+		return res, nil
+	}
 
-	if err := tx.Raw(sql, creater, info, limit, offset).Find(&res).Error; err != nil {
+	arg := false
+	if info == "true" {
+		arg = true
+	}
+	if err := tx.Raw(sql, creater, arg, limit, offset).Find(&res).Error; err != nil {
 		return nil, err
 	}
 	return res, nil
