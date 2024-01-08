@@ -49,6 +49,15 @@ type UpdateOrderInfoByIDResp struct {
 	baseresp.BaseResp
 }
 
+type DeleteOrderByIDReq struct {
+	ID    int
+	Token string
+}
+
+type DeleteOrderByIDResp struct {
+	baseresp.BaseResp
+}
+
 type LoginReq struct {
 	Account string
 	Pw      string

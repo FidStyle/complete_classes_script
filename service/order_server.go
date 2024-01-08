@@ -113,3 +113,40 @@ func (s *OrderServer) UpdateOrderInfoByID(any *types.UpdateOrderInfoByIDReq) *ty
 		BaseResp: *baseresp.SuccessResp(),
 	}
 }
+
+func (s *OrderServer) DeleteOrderByID(any *types.DeleteOrderByIDReq) *types.DeleteOrderByIDResp {
+	account, err := user.GetAccountByToken(s.rtx, any.Token)
+	if err != nil {
+		return &types.DeleteOrderByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+
+	orders, err := order.GetOrderByID(s.tx, any.ID)
+	if err != nil {
+		return &types.DeleteOrderByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+	if len(orders) == 0 {
+		return &types.DeleteOrderByIDResp{
+			BaseResp: *baseresp.ErrorResp(baseresp.ErrOrderIDNotExist),
+		}
+	}
+
+	if orders[0].Creater != account {
+		return &types.DeleteOrderByIDResp{
+			BaseResp: *baseresp.ErrorResp(baseresp.ErrAuthInvalid),
+		}
+	}
+
+	if err := order.DeleteOrderByID(s.tx, any.ID); err != nil {
+		return &types.DeleteOrderByIDResp{
+			BaseResp: *baseresp.ErrorResp(err),
+		}
+	}
+
+	return &types.DeleteOrderByIDResp{
+		BaseResp: *baseresp.SuccessResp(),
+	}
+}
