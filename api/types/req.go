@@ -29,6 +29,12 @@ type GetOrderByCreaterReq struct {
 	Info   string
 }
 
+type UpdateOrderInfoByIDReq struct {
+	ID    int
+	Info  bool
+	Token string
+}
+
 type LoginReq struct {
 	Account string `json:"account"`
 	Pw      string `json:"pw"`

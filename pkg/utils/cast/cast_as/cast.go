@@ -27,6 +27,13 @@ func CastGetOrderByCreaterResp(any *svc.GetOrderByCreaterResp) *types.GetOrderBy
 	return res
 }
 
+func CastUpdateOrderInfoByIDReq(any *types.UpdateOrderInfoByIDReq) *svc.UpdateOrderInfoByIDReq {
+	res := &svc.UpdateOrderInfoByIDReq{}
+
+	utils.FillSameField(any, res)
+	return res
+}
+
 func CastLoginReq(any *types.LoginReq) *svc.LoginReq {
 	res := &svc.LoginReq{}
 

@@ -1,4 +1,2 @@
-[Error] 2024/01/08 01:34:14 unexpected EOF
-[Error] 2024/01/08 02:03:34 unexpected EOF
-[Error] 2024/01/08 02:09:54 ERROR: OFFSET must not be negative (SQLSTATE 2201X)
-[Error] 2024/01/08 02:35:13 unexpected EOF
+[Error] 2024/01/08 03:02:51 token expired, please log in again
+[Error] 2024/01/08 03:03:13 read tcp 192.168.246.132:57034->121.40.241.115:5432: read: connection reset by peer
